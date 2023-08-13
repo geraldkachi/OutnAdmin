@@ -19,7 +19,7 @@ const Login: React.FC<LoginProps> = (props) => {
 		mutate(values).then(({data,status,error})=>{
 			if (status === 200){
 				setAuth(data)
-				query(PATHS.getUser, {user_id:data.user_id}, data).then(({data, status})=>{
+				query(PATHS.user, {user_id:data.user_id}, data).then(({data, status})=>{
 					if (status === 200){
 						setUser(data)
 						router.push(redirectTo||"/").catch(()=>{})
@@ -73,16 +73,6 @@ const Login: React.FC<LoginProps> = (props) => {
 							/>
 						</div>
 
-						<div className="flex-between">
-							<div className="flex-item gap-3">
-								{/*<Checkbox selected={checked} setSelected={setChecked} box color={"primary"}/>*/}
-								{/*<p className="text-sm text font-light">Keep me signed in</p>*/}
-							</div>
-							<Link href={"/forgot-password"}>
-								<p className="text-sm text-secondary my-5">Forgot Password?</p>
-							</Link>
-						</div>
-
 						<div className="mt-10">
 							<Button
 								title={"Log in"}
@@ -90,15 +80,6 @@ const Login: React.FC<LoginProps> = (props) => {
 								onClick={handleSubmit}
 								loading={loading}
 							/>
-						</div>
-
-						<div className="mt-8">
-							<p className="text-sm text text-center">
-								Don’t have an account?
-								<Link href={"/signup"}>
-									<span className="text-secondary ml-2">Create Account</span>
-								</Link>
-							</p>
 						</div>
 					</div>
 				)}
