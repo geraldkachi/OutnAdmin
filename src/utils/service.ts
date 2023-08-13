@@ -1,35 +1,47 @@
-import {decrypt, encrypt} from "@/utils/crypto";
-import {Auth} from "@/types";
+import config from "../config";
+
+type Auth = string
 
 export type Method = 'POST'|'GET'|'PUT'|'DELETE'
 
-async function http(path:string,method:Method, data:any, status?:boolean, auth?:Auth, text?:boolean) {
+async function http(path:string,method:Method, data:any, status?:boolean, auth?:Auth) {
 
     let headers:any = {};
-    if (auth?.user_id){
+    if (auth){
         headers = {
-            "X-Clientid":auth.user_id,
-            "X-Authid-Token":auth.session_token
+            Authorization:"Bearer "+auth
+        }
+    }
+    method = method||'GET';
+    let query = '';
+    if (method==="GET"){
+        for (const [i, key] of Object.keys(data).entries()) {
+            query+= `${i===0?'?':'&'}${key}=${data[key]}`
         }
     }
 
-    return new Promise((resolve, reject) =>{
-        fetch(process.env.NEXT_PUBLIC_BASE_URL+path, {
-            method:method||'GET',
-            headers,
-            body: data&&encrypt(data)
-        })
+    const url = config.baseUrl+path+query
+    const init = {
+        method,
+        headers:{
+            "Content-Type":"application/json",
+            ...headers,
+        },
+        body: method==="GET"?undefined:data && JSON.stringify(data)
+    }
+
+    return new Promise((resolve, reject) => {
+        fetch(url, init)
             .then(async (response) => {
-                const text = await response.text()
-                const data = text?JSON.parse(decrypt(text)):null
-                if (status) return { data, status:response.status }
+                const data = await response.json()
+                if (status) return {data,status:response.status}
                 return data
             })
             .then((res) => {
                 resolve(res);
             })
             .catch((error) => {
-                reject(error);
+                resolve({data:{error:error?.message},status:500})
             });
     });
 }

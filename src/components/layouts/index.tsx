@@ -12,7 +12,6 @@ type LayoutProps = {
 	title?:string
 	back?:boolean
 }
-
 const Layout: React.FC<LayoutProps> = (props) => {
     const {children,title, back} = props;
 	const ref = useRef<any>();

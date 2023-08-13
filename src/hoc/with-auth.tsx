@@ -11,7 +11,7 @@ export const withAuth = (Page:any) => {
 
         useEffect(() => {
             (async () => {
-                if (!auth.user_id) {
+                if (!auth?.user_id) {
                     await setLogout()
                     setRedirectTo(router.pathname)
                     await router.push("/login")
@@ -19,7 +19,7 @@ export const withAuth = (Page:any) => {
             })()
         }, []);
 
-        return auth.user_id?
+        return auth?.user_id?
             <Page {...props}/> :
             <div className="w-full h-screen flex-center">
                 <Image src={"/images/icon.png"} width={60} height={60} alt={""} priority/>

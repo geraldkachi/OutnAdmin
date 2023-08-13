@@ -11,7 +11,7 @@ const HtmlHead: React.FC<HtmlHeadProps> = (props) => {
     return (
         <>
             <Head>
-                <title>{title||"Finceptive"}</title>
+                <title>{title||"Out N About"}</title>
                 <meta name="description" content="" />
                 <link rel="icon" href="/favicon.ico" />
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>

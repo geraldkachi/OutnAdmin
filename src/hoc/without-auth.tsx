@@ -10,13 +10,13 @@ export const withoutAuth = (Page:any) => {
 
         useEffect(() => {
             (async () => {
-                if (auth.user_id) {
+                if (auth?.user_id) {
                     await router.push(redirectTo||'/');
                 }
             })()
         }, []);
 
-        return !auth.user_id? <Page/>:
+        return !auth?.user_id? <Page/>:
             <div className="w-full h-screen flex-center">
                 <Image src={"/images/icon.png"} width={60} height={60} alt={""} priority/>
             </div>;
