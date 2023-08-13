@@ -115,7 +115,7 @@ const useQuery=(route:string, args?:Args):Props=> {
                 }))
 
                 const {path, method, key} = ctx;
-                const res:any = await http(path,method||"GET", variables, true, auth)
+                const res:any = await http(path,method||"GET", variables, true, auth.accessToken)
                 const error = res.status!==200?res.data?.description||"Oops! an error occurred":undefined
                 dispatch(network.actions.set({
                     key:ctx.key,
@@ -153,7 +153,7 @@ const useQuery=(route:string, args?:Args):Props=> {
 
     const fetchMore = async (args:any,concat?:'start'|'end'|'pagination', paginationKey?:string)=>{
         const {path, method, key} = ctx;
-        const res:any = await http(path,method||"GET", { ...variables, ...(args||{}) }, true, auth)
+        const res:any = await http(path,method||"GET", { ...variables, ...(args||{}) }, true, auth.accessToken)
         const error = res.status!==200?res.data?.error?.toString()||"Oops! an error occurred":undefined
         if (res.status === 200){
             if (concat==='start'){

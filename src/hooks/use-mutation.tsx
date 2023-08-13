@@ -43,7 +43,7 @@ const useMutation = (route:string,option?:Option):UseMutationProps => {
 				return spr[key]
 			})
 			setLoading(true)
-			const res:any = await http(path,method||"POST", variables,true, auth, option?.text)
+			const res:any = await http(path,method||"POST", variables,true, auth.accessToken)
 			if ([200,201].includes(res.status)){
 				const data = res.data;
 				setData(data)
@@ -79,7 +79,7 @@ const useMutation = (route:string,option?:Option):UseMutationProps => {
 				delete variables[key]
 				return spr[key]
 			})
-			const res:any = await http(path,method||"GET", variables||{}, true,customAuth||auth, option?.text)
+			const res:any = await http(path,method||"GET", variables||{}, true,customAuth||auth.accessToken)
 			const error = res.status!==200?res.data?.error||"Oops! an error occurred":undefined
 			setLoading(false)
 			if (res.status === 200){

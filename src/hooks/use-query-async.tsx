@@ -25,7 +25,7 @@ const useQueryAsync=():Props=> {
                 }
             }))
 
-            const res: any = await http(path, method || "GET", variables||{}, true, auth)
+            const res: any = await http(path, method || "GET", variables||{}, true, auth.accessToken)
             const error = res.status !== 200 ? res.data?.error?.toString() || "Oops! an error occurred" : undefined
 
             dispatch(network.actions.set({

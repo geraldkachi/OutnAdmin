@@ -40,7 +40,7 @@ const useMutation = (route:string,option?:Option):UseMutationProps => {
 				return spr[key]
 			})
 			setLoading(true)
-			const res:any = await http(path,method||"POST", variables,true,auth)
+			const res:any = await http(path,method||"POST", variables,true,auth.accessToken)
 			if ([200,201].includes(res.status)){
 				setData(res.data)
 				setLoading(false)
