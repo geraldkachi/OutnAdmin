@@ -4,9 +4,9 @@ import {ColorModes, Module, User} from "@/types";
 
 export interface AppState {
     auth:{
-        user_id?:string
-        session_token?:string
-        customerID?:string
+        accessToken?:string,
+        refreshToken?:string,
+        user?: any
     },
     user: User
     colorMode: ColorModes
