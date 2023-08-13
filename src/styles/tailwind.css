@@ -1,0 +1,268 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  body{
+    @apply select-none;
+  }
+  .bg{
+    background-color: var(--ion-background-color);
+  }
+  .bg-dark-trans {
+    background-color: rgba(0,0,0,0.41);
+  }
+
+  a,input,.cursor-pointer, textarea,a:hover,a:focus,a:active,select,select:focus,select:hover{
+    @apply focus:outline-none outline-none
+  }
+
+  .title{
+    @apply font-bold text-2xl text-center text-bold
+  }
+  .sub-title{
+    @apply text-sm text-center text leading-loose font-light mt-3
+  }
+
+  button:disabled{
+    @apply opacity-50 cursor-not-allowed
+  }
+
+  .input{
+    @apply px-4 py-4 w-full text-sm
+  }
+
+  .btn-primary{
+    @apply bg-primary text-white
+  }
+
+  .btn-success{
+    @apply bg-success text-white
+  }
+
+  .btn-primary-border{
+    @apply bg text-primary border border-primary
+  }
+
+  .btn-secondary-border{
+    @apply bg text-secondary border border-secondary
+  }
+
+  .btn{
+    @apply py-3 rounded-md px-10 tracking-wide flex-center gap-2 whitespace-nowrap w-full
+  }
+
+  .btn-secondary{
+    @apply bg-secondary text-light
+  }
+
+  .btn-danger{
+    @apply bg-danger text-white rounded-md
+  }
+
+  .bg-modal{
+    background-color: #9AA3B199
+  }
+
+  table, td, th {
+    @apply border-0 px-5 py-4
+  }
+
+  .z-100 {
+    z-index: 100;
+  }
+
+  .z-200 {
+    z-index: 200 !important;
+  }
+
+  .z-1000 {
+    z-index: 1000 !important;
+  }
+
+  .z-2000 {
+    z-index: 2000 !important;
+  }
+
+  .z-3000 {
+    z-index: 3000 !important;
+  }
+
+  .z-4000 {
+    z-index: 4000 !important;
+  }
+
+  .font-times {
+    font-family: "Times New Roman";
+  }
+
+  .flex-center{
+    @apply  flex items-center justify-center
+  }
+
+  .flex-col-center{
+    @apply flex-col flex-center
+  }
+
+  .icon-btn{
+    @apply flex items-center justify-center h-10 w-10 rounded-full
+  }
+
+  .w-28 {
+    width: 7rem;
+  }
+  .h-52 {
+    height: 13rem;
+  }
+  .h-42{
+    height: 11rem;
+  }
+  .h-58 {
+    height: 15rem;
+  }
+  .h-128 {
+    height: 32rem;
+  }
+  .h-36 {
+    height: 9rem;
+  }
+
+  .h-74 {
+    height: 22rem;
+  }
+
+  .h-screen-90 {
+    height: 90vh;
+  }
+
+  .w-screen-90 {
+    width: 90vw;
+  }
+
+  .h-screen-80 {
+    height: 80vh;
+  }
+
+  .h-screen-75 {
+    height: 75vh;
+  }
+
+  .max-h-half {
+    max-height: 50vh;
+  }
+
+  .min-h-half {
+    min-height: 50vh;
+  }
+
+  .min-h-80 {
+    min-height: 80vh;
+  }
+
+  .max-h-80 {
+    max-height: 80vh !important;
+  }
+
+  .max-h-90 {
+    max-height: 90vh !important;
+  }
+
+  .min-h-90 {
+    min-height: 90vh;
+  }
+
+  .min-h-95 {
+    min-height: 95vh;
+  }
+
+  .min-h-70 {
+    min-height: 70vh;
+  }
+  .max-w-7xl {
+    max-width: 80rem;
+  }
+  .w-74 {
+    width: 18rem;
+  }
+  .w-84 {
+    width: 20rem;
+  }
+  .flex-col-center{
+    @apply flex flex-col items-center justify-center
+  }
+
+  .flex-between{
+    @apply flex items-center justify-between
+  }
+
+  .flex-item{
+    @apply flex items-center
+  }
+
+  .text{
+    color: var(--ion-text-color);
+  }
+
+  .text-bold{
+    color: #002B44;
+  }
+
+  .text-ellipsis{
+    text-overflow: ellipsis;
+  }
+
+  .text-xxs{
+    font-size: 0.65rem;
+  }
+  .bg-dark-trans{
+    background-color: rgba(0,0,0,0.77);
+  }
+  .load{
+    @apply animate-pulse bg-medium-shade text-medium-shade rounded-md
+  }
+
+  .label {
+    @apply text-gray-800 text-sm
+  }
+  .scroll-hidden::-webkit-scrollbar {
+    display: none;
+  }
+  .scroll-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .max-w-6-5xl{
+    max-width: 78rem
+  }
+
+  .box {
+    @apply w-full lg:flex-1 border-2 bg-[#EAF1FB] rounded-2xl flex-col-center py-10 relative cursor-pointer
+  }
+
+  .box-checked {
+    @apply border-secondary
+  }
+
+  .box-uncheck {
+    @apply border-dashed
+  }
+
+  .vendor-grid {
+    @apply py-5 lg:py-10 px-5 lg:px-10 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 lg:gap-10
+  }
+
+  .verify-btn {
+    @apply w-10 h-10 border shadow rounded-full flex-center bg
+  }
+
+}
+
+.capitalize {
+  text-transform: lowercase;
+}
+
+.capitalize::first-line {
+  text-transform: capitalize;
+}
