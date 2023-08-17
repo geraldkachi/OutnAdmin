@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Layout from "@/components/auth/layout";
 import {Button, Checkbox, Formik, Input, useMutation, Yup} from "@/components/rn-alpha";
-import Link from "next/link";
 import PATHS from "@/paths";
 import {useApp} from "@/store/contexts/app-context";
 import {useRouter} from "next/router";
@@ -39,7 +38,7 @@ const Login: React.FC<LoginProps> = (props) => {
 	});
 
 	return (
-		<Layout title={"Login - Finceptive"}>
+		<Layout title={"Login - Out N About"}>
 			<Formik
 				initialValues={{
 					password:"",

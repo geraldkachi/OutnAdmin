@@ -1,19 +1,23 @@
-import CryptoJS from "crypto-js";
+import aes from "crypto-js/aes";
+import encUtf8 from "crypto-js/enc-utf8";
 
+const passkey:string = "4:{!]Meq2&nX]4u(7GU!";
 
-const NEXT_PUBLIC_CRYPTO_KEY = process.env.NEXT_PUBLIC_CRYPTO_KEY||"";
-const NEXT_PUBLIC_CRYPTO_IV = process.env.NEXT_PUBLIC_CRYPTO_IV||"";
+export const encrypt = (data:any, key:string=passkey) => {
+    let encryptedString:any = aes.encrypt(JSON.stringify(data), key);
+    encryptedString = encryptedString.toString();
+    return encryptedString;
+};
 
-const key = CryptoJS.enc.Utf8.parse(NEXT_PUBLIC_CRYPTO_KEY);
-const iv  = CryptoJS.enc.Utf8.parse(NEXT_PUBLIC_CRYPTO_IV);
-
-export const encrypt=(payload:any)=>{
-    return CryptoJS.AES.encrypt(JSON.stringify(payload), key, {iv: iv, mode: CryptoJS.mode.CBC,padding: CryptoJS.pad.Pkcs7}).toString()
-}
-
-export const decrypt=(response:string)=>{
-    const ciphertext:any = {ciphertext:CryptoJS.enc.Base64.parse(response)}
-    const decrypted_response = CryptoJS.AES.decrypt(ciphertext,key,{iv: iv});
-    return decrypted_response.toString(CryptoJS.enc.Utf8);
-}
-
+export const decrypt = (encryptedString:any, key:string=passkey) => {
+    try {
+        if (encryptedString){
+            const decryptedString:any = aes.decrypt(encryptedString.toString(), key);
+            return JSON.parse(decryptedString.toString(encUtf8));
+        }else {
+            return {}
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};

@@ -18,7 +18,7 @@ export const withoutAuth = (Page:any) => {
 
         return !auth?.accessToken? <Page/>:
             <div className="w-full h-screen flex-center">
-                <Image src={"/images/icon.png"} width={60} height={60} alt={""} priority/>
+                <Image src={"/images/icon.png"} className="rounded-md" width={60} height={60} alt={""} priority/>
             </div>;
     };
 };

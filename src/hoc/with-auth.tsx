@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {useApp} from "@/store/contexts/app-context";
-import Svg from "@/components/global/svg";
 import Image from "next/image";
 
 export const withAuth = (Page:any) => {
@@ -22,7 +21,7 @@ export const withAuth = (Page:any) => {
         return auth?.accessToken?
             <Page {...props}/> :
             <div className="w-full h-screen flex-center">
-                <Image src={"/images/icon.png"} width={60} height={60} alt={""} priority/>
+                <Image src={"/images/icon.png"} className="rounded-md" width={60} height={60} alt={""} priority/>
             </div>
     };
 };
