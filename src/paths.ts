@@ -1,7 +1,5 @@
 const PATHS = {
-	login:"POST:/auth/login",
-	register:"POST:/auth/register",
-	oauth:"POST:/auth/oauth",
+	login:"POST:/admin/login",
 	categories:"GET:/categories",
 	savePreference:"PUT:/user/preference",
 	user:"GET:/user",

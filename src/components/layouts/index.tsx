@@ -1,7 +1,6 @@
 import React, {ReactElement, useRef} from 'react';
 import Header from "@/components/layouts/header";
 import SideBar from "@/components/layouts/side-bar";
-import {useRouter} from "next/router";
 import HtmlHead from "@/components/layouts/html-head";
 
 import { Inter } from 'next/font/google';
