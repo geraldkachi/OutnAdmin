@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 	const {setLogout} = useApp();
 	const router = useRouter();
 	const [open,setOpen] = useState(false);
-	const {user} = useApp();
+	const {auth:{user}} = useApp();
 
     return (
         <>
@@ -48,8 +48,8 @@ const Header: React.FC<HeaderProps> = (props) => {
 						        <Svg icon={person} className="w-4 text-white"/>
 					        </div>
 					        <div>
-						        <p className="text-xs text font-medium">{user?.Firstname} {user?.Lastname}</p>
-						        <p className="text-xs text-medium">{user.Role}</p>
+						        <p className="text-xs text font-medium">{user?.name}</p>
+						        <p className="text-xs text-medium">Admin</p>
 					        </div>
 				        </div>
 

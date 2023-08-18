@@ -22,8 +22,8 @@ const Home: React.FC<DashboardProps> = (props) => {
     ]
 
     return (
-        <Layout title={"Home - Out N About"}>
-            <section className="grid gap-5 grid-cols-3 lg:grid-cols-4 py-5">
+        <Layout title={"Home"}>
+            <section className="grid gap-5 grid-cols-2 lg:grid-cols-4 py-5">
                 {list.map((item,i)=>(
                     <Link href={""}>
                         <div key={KEY+i} className="shadow px-5 py-4 bg rounded-md">
