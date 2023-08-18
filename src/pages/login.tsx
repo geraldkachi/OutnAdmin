@@ -16,16 +16,10 @@ const Login: React.FC<LoginProps> = (props) => {
 
 	const formHandler=(values:any)=>{
 		mutate(values).then(({data,status,error})=>{
+			console.log({data});
 			if (status === 200){
 				setAuth(data)
-				query(PATHS.user, {user_id:data.user_id}, data).then(({data, status})=>{
-					if (status === 200){
-						setUser(data)
-						router.push(redirectTo||"/").catch(()=>{})
-					}else {
-						Toast("Oops! unable to login, kindly contact Customer support", "red")
-					}
-				})
+				router.push(redirectTo||"/").catch(()=>{})
 			}else {
 				Toast(error?.includes("Failed")?"Your internet is not stable. Please check your internet and try again":"Email or password incorrect!", "red")
 			}
@@ -43,6 +37,7 @@ const Login: React.FC<LoginProps> = (props) => {
 				initialValues={{
 					password:"",
 					email:"",
+					deviceId:"deviceId"
 				}}
 				onSubmit={(values => formHandler(values))}
 				validationSchema={Schema}

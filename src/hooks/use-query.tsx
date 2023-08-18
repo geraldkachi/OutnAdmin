@@ -116,7 +116,7 @@ const useQuery=(route:string, args?:Args):Props=> {
 
                 const {path, method, key} = ctx;
                 const res:any = await http(path,method||"GET", variables, true, auth.accessToken)
-                const error = res.status!==200?res.data?.description||"Oops! an error occurred":undefined
+                const error = res.status!==200?res.data.data?.description||"Oops! an error occurred":undefined
                 dispatch(network.actions.set({
                     key:ctx.key,
                     value: {
@@ -126,8 +126,8 @@ const useQuery=(route:string, args?:Args):Props=> {
                 }))
 
                 if (res.status === 200){
-                    if (res.data){
-                        dispatch(actions.set({key, value:res.data}))
+                    if (res.data.data){
+                        dispatch(actions.set({key, value:res.data.data}))
                     }
                 }
                 else if([401,404].includes(res.status)) {
@@ -154,18 +154,18 @@ const useQuery=(route:string, args?:Args):Props=> {
     const fetchMore = async (args:any,concat?:'start'|'end'|'pagination', paginationKey?:string)=>{
         const {path, method, key} = ctx;
         const res:any = await http(path,method||"GET", { ...variables, ...(args||{}) }, true, auth.accessToken)
-        const error = res.status!==200?res.data?.error?.toString()||"Oops! an error occurred":undefined
+        const error = res.status!==200?res.data.data?.error?.toString()||"Oops! an error occurred":undefined
         if (res.status === 200){
             if (concat==='start'){
-                dispatch(actions.prepend({key, value:res.data}))
+                dispatch(actions.prepend({key, value:res.data.data}))
             }
             else if (concat==='end'){
-                dispatch(actions.prepend({key, value:res.data}))
+                dispatch(actions.prepend({key, value:res.data.data}))
             }
             else if (concat==='pagination'){
-                dispatch(actions.paginate({key, data:res.data, paginationKey:paginationKey||"data"}))
+                dispatch(actions.paginate({key, data:res.data.data, paginationKey:paginationKey||"data"}))
             }
-            return {data:res.data}
+            return {data:res.data.data}
         }
         else if(res.status === 401) {
             Toast("Session expired! kindly login","red")

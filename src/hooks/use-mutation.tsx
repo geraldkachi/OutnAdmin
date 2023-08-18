@@ -45,9 +45,9 @@ const useMutation = (route:string,option?:Option):UseMutationProps => {
 			setLoading(true)
 			const res:any = await http(path,method||"POST", variables,true, auth.accessToken)
 			if ([200,201].includes(res.status)){
-				const data = res.data;
+				const data = res.data.data;
 				setData(data)
-				if (route.includes(PATH.login) && res.data?.auth_idtoken){
+				if (route.includes(PATH.login) && res.data.data){
 					// setLoading(false)
 				}else {
 					setLoading(false)
@@ -58,7 +58,7 @@ const useMutation = (route:string,option?:Option):UseMutationProps => {
 				Toast("Session expired! kindly login","red")
 				router.push("/logout").catch(()=>{})
 			}
-			const error = res.data?.description||"Oops! and error occurred";
+			const error = res.data.data?.description||"Oops! and error occurred";
 			setError(error)
 			setLoading(false)
 			return {error,status:res.status}
@@ -80,12 +80,12 @@ const useMutation = (route:string,option?:Option):UseMutationProps => {
 				return spr[key]
 			})
 			const res:any = await http(path,method||"GET", variables||{}, true,customAuth||auth.accessToken)
-			const error = res.status!==200?res.data?.error||"Oops! an error occurred":undefined
+			const error = res.status!==200?res.data.data?.error||"Oops! an error occurred":undefined
 			setLoading(false)
 			if (res.status === 200){
 				const key = getKey(route,variables)
-				setCache(key,res.data)
-				return {status:res.status, data:res.data}
+				setCache(key,res.data.data)
+				return {status:res.status, data:res.data.data}
 			}
 			if (!route.includes(PATH.login)&&[401,404].includes(res.status)){
 				Toast("Session expired! kindly login","red")
