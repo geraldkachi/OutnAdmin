@@ -16,7 +16,6 @@ const Login: React.FC<LoginProps> = (props) => {
 
 	const formHandler=(values:any)=>{
 		mutate(values).then(({data,status,error})=>{
-			console.log({data});
 			if (status === 200){
 				setAuth(data)
 				router.push(redirectTo||"/").catch(()=>{})

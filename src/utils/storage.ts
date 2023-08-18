@@ -7,7 +7,7 @@ class Storage {
         try {
             const value = localStorage.getItem(key);
             if (value) {
-                return JSON.parse(decrypt(value))
+                return decrypt(value)
             }
             return undefined
         } catch(e) {
