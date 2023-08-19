@@ -43,7 +43,7 @@ const Event: React.FC<EventProps> = (props) => {
                 <div className="relative">
                     <Logo/>
                     <div className="absolute inset-0 py-2">
-                        <h1 className="text-2xl text-center">Create an Event</h1>
+                        <h1 className="text-xl text-center uppercase">Create an Event</h1>
                     </div>
                 </div>
 
@@ -176,7 +176,11 @@ const Event: React.FC<EventProps> = (props) => {
                                 error={errors.additionalInfo}
                             />
 
-                            <Button title={"Submit"} className={"btn-primary mt-10"}/>
+                            <Button
+                                title={"Submit"}
+                                className={"btn-primary mt-10"}
+                                onClick={handleSubmit}
+                            />
                         </div>
                     )}
                 </Formik>
