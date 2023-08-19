@@ -13,7 +13,7 @@ const Events: React.FC<EventsProps> = (props) => {
         <Layout title={""}>
 	        <Table
 		        header={["title","date","organiser","email","category","location","Action"]}
-		        data={data?.data.map((item:any)=>(
+		        data={data?.events.map((item:any)=>(
 			        [
 				        item.title,
 				        item.date,
@@ -37,6 +37,7 @@ const Events: React.FC<EventsProps> = (props) => {
 			        total: data?.pagination.total,
 			        dataCount: data?.pagination.dataCount,
 			        fetchMore,
+			        paginationKey:"events"
 		        }}
 	        />
         </Layout>

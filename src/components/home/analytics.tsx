@@ -7,14 +7,16 @@ import PATHS from "@/paths";
 type AnalyticsProps = {}
 
 const Analytics: React.FC<AnalyticsProps> = (props) => {
+	const users = useQuery(PATHS.users)
+	const groups = useQuery(PATHS.groups)
 	const events = useQuery(PATHS.events, {variables:{approved:true}})
 	const pending = useQuery(PATHS.events, {variables:{approved:false}})
 
 	const list = [
-		{ name:"Users", value:"0", path:"" },
-		{ name:"Events", value:events.data?.events?.length||0, path:"" },
-		{ name:"New Events", value:pending.data?.events?.length||0, path:"" },
-		{ name:"Groups", value:"0", path:"" },
+		{ name:"Users", value:users.data?.pagination?.total||0, path:"" },
+		{ name:"Events", value:events.data?.pagination?.total||0, path:"" },
+		{ name:"New Events", value:pending.data?.pagination?.total||0, path:"" },
+		{ name:"Groups", value:groups.data?.pagination?.total||0, path:"" },
 	]
     return (
 	    <section className="grid gap-5 grid-cols-2 lg:grid-cols-4 py-5">
