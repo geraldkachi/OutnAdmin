@@ -7,7 +7,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .swal-button--confirm,.swal-button--confirm:not([disabled]):hover {
-    /*background-color: var(--ion-color-light-tint);*/
+    background-color: var(--ion-color-primary);
 }
 .swal-button:not([disabled]):hover{
     opacity: 0.7;

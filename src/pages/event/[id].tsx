@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {Button, Formik, Input, Preloader, Svg, useMutation, useQuery, Yup} from "@/components/rn-alpha";
+import {Button, Checkbox, Formik, Input, Preloader, Svg, useMutation, useQuery, Yup} from "@/components/rn-alpha";
 import PATHS from "@/paths";
 import {useApp} from "@/store/contexts/app-context";
 import Textarea from "@/components/inputs/textarea";
@@ -7,6 +7,8 @@ import CustomSelect from "@/components/inputs/custom-select";
 import {withAuth} from "@/hoc/with-auth";
 import {arrowBack} from "@/svg/icons";
 import {useRouter} from "next/router";
+import HtmlHead from "@/components/layouts/html-head";
+import sweetalert from "@/utils/sweetalert";
 
 type EventViewProps = {}
 
@@ -15,28 +17,31 @@ const EventView: React.FC<EventViewProps> = (props) => {
 	const router = useRouter();
 	const {mutate,loading} = useMutation(PATHS.createEvent)
 	const {loading:isLoading,error,data} = useQuery(PATHS.categories)
-	console.log(router.query.id);
 	const event = useQuery(PATHS.event,{variables:{id:router.query.id}, networkPolicy:"network-and-cache"})
 	const [key,setKey] = useState(0);
 
 	const {Toast, showAlert} = useApp();
 
 	const formHandler=(values:any)=>{
-		const date = values.date.split("-");
-		mutate({
-			...values,
-			date: `${date[1]}-${date[2]}-${date[0]}`
-		}).then(({data,status,error})=>{
-			if (status===201){
-				setKey(prevState => prevState+1)
-				showAlert({
-					title:"Submitted Successfully",
-					text:"We have received your request, we will get back to you as soon as possible",
-					btn:{text:"Add New Event"},
-					color:"bg-primary"
+		sweetalert({
+			title:"Approve",
+			text:"You are about to approve this event",
+			confirm:{text:"Approve"}
+		}).then((okay)=>{
+			if (okay){
+				const date = values.date.split("-");
+				mutate({
+					...values,
+					date: `${date[1]}-${date[2]}-${date[0]}`,
+					approve:true
+				}).then(({data,status,error})=>{
+					if (status===200){
+						Toast("Approved successfully")
+						router.back()
+					}else {
+						Toast(error||"", "red")
+					}
 				})
-			}else {
-				Toast(error||"", "red")
 			}
 		})
 	}
@@ -57,16 +62,14 @@ const EventView: React.FC<EventViewProps> = (props) => {
 		ticketURL:Yup.string().required('TicketURL is required'),
 	});
 
-	console.log(event.data);
-
 	return (
-		<div key={key} className="fixed inset-0 overflow-y-auto py-10 px-2" style={{background:"linear-gradient(170.9deg, #5e4ff1 -16.98%, #4f9df1 128.65%)"}}>
+		<div key={loading?"dhshdd":"djsdskdnn"} className="fixed inset-0 overflow-y-auto py-10 px-2" style={{background:"linear-gradient(170.9deg, #5e4ff1 -16.98%, #4f9df1 128.65%)"}}>
+			<HtmlHead/>
 			<div className="container max-w-3xl py-5 px-5 lg:px-10 bg rounded">
 				<div className="relative flex-item gap-10">
 					<div onClick={()=>{router.back()}} className="z-10 w-10 h-10 flex-center cursor-pointer">
 						<Svg icon={arrowBack} className="w-8"/>
 					</div>
-					{/*<Logo/>*/}
 					<div className="absolute inset-0 py-2">
 						<h1 className="text-xl text-center uppercase">EVENT</h1>
 					</div>
@@ -76,7 +79,6 @@ const EventView: React.FC<EventViewProps> = (props) => {
 					initialValues={{
 						title:"",
 						email:"",
-						date:"",
 						startTime:"",
 						endTime:"",
 						description:"",
@@ -88,7 +90,9 @@ const EventView: React.FC<EventViewProps> = (props) => {
 						dressCode:"",
 						ticketURL:"",
 						additionalInfo:"",
-						...(event.data||{})
+						paid:false,
+						...(event.data||{}),
+						date:event?.data?.dateTime.slice(0,10)||""
 					}}
 					onSubmit={(values => formHandler(values))}
 					validationSchema={Schema}
@@ -215,19 +219,38 @@ const EventView: React.FC<EventViewProps> = (props) => {
 								error={errors.additionalInfo}
 							/>
 
-							<Button
-								title={"Approve"}
-								className={"btn-primary mt-10"}
-								onClick={handleSubmit}
-								loading={loading}
-							/>
+							<div className="flex-item gap-5">
+								<p className="label">Paid Event</p>
+								<Checkbox selected={values.paid} color={"primary"} box setSelected={(value)=>setFieldValue("paid",value)}/>
+							</div>
+
+							<div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+								<Button
+									title={"Cancel"}
+									className={"bg border mt-10"}
+									onClick={()=>router.back()}
+									loading={loading}
+								/>
+								<Button
+									title={"Approve"}
+									className={"btn-primary mt-10"}
+									onClick={handleSubmit}
+									loading={loading}
+								/>
+							</div>
 						</div>
 					)}
 				</Formik>
 			</div>
-			<Preloader loading={event.loading}/>
+			<Preloader loading={(event.loading && (!event.data))}/>
 		</div>
 	);
 };
 
 export default withAuth(EventView);
+
+export async function getServerSideProps({query}:any) {
+	return {
+		props: { query }
+	}
+}

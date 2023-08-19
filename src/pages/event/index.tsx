@@ -5,6 +5,7 @@ import {useApp} from "@/store/contexts/app-context";
 import Logo from "@/components/layouts/logo";
 import Textarea from "@/components/inputs/textarea";
 import CustomSelect from "@/components/inputs/custom-select";
+import HtmlHead from "@/components/layouts/html-head";
 
 type EventProps = {}
 
@@ -56,6 +57,7 @@ const Event: React.FC<EventProps> = (props) => {
 
 	return (
 		<div key={key} className="fixed inset-0 overflow-y-auto py-10 px-2" style={{background:"linear-gradient(170.9deg, #5e4ff1 -16.98%, #4f9df1 128.65%)"}}>
+			<HtmlHead/>
 			<div className="container max-w-3xl py-5 px-5 lg:px-10 bg rounded">
 				<div className="relative">
 					<Logo/>
