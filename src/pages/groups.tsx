@@ -7,29 +7,27 @@ import Table from "@/components/global/table";
 type GroupsProps = {}
 
 const Groups: React.FC<GroupsProps> = (props) => {
-    const {loading,error,data, fetchMore} = useQuery(PATHS.users, {networkPolicy:"network-and-cache"})
+    const {loading,error,data, fetchMore} = useQuery(PATHS.groups, {networkPolicy:"network-and-cache"})
     return (
         <Layout title={"Groups"}>
             <Table
-                header={["Name","Email","Verified","Preference"]}
+                header={["Name","Members", "Events"]}
                 data={data?.data?.map((item:any)=>(
                     [
                         item.name,
-                        item.email,
-                        item.verified?"Yes":"No",
-                        item.preference.length,
+                        item.members,
+                        item.events,
                     ]
                 ))}
                 title={"Groups"}
                 emptyText={"No records found"}
-                loading={(loading && (!data || data?.pagination.dataCount < 1))}
+                loading={(loading && (!data || data?.pagination?.dataCount < 1))}
                 offsetType={"paginate"}
                 pagination={{
-                    limit: data?.pagination.limit,
-                    total: data?.pagination.total,
-                    dataCount: data?.pagination.dataCount,
+                    limit: data?.pagination?.limit,
+                    total: data?.pagination?.total,
+                    dataCount: data?.pagination?.dataCount,
                     fetchMore,
-                    paginationKey: "events"
                 }}
             />
         </Layout>
