@@ -3,11 +3,11 @@ import Layout from "@/components/layouts";
 import {useRouter} from "next/router";
 import {withAuth} from "@/hoc/with-auth";
 import {useApp} from "@/store/contexts/app-context";
-import {KEY} from "@/config";
 import Link from "next/link";
 import Table from "@/components/global/table";
-import {Button, useQuery} from "@/components/rn-alpha";
+import {useQuery} from "@/components/rn-alpha";
 import PATHS from "@/paths";
+import Analytics from "@/components/home/analytics";
 
 type DashboardProps = {}
 
@@ -17,26 +17,9 @@ const Home: React.FC<DashboardProps> = (props) => {
     const {user} = useApp();
     const {loading,error,data, fetchMore} = useQuery(PATHS.events, {variables:{approved:false}, networkPolicy:"network-and-cache"})
 
-    const list = [
-        { name:"Users", value:"0", path:"" },
-        { name:"Events", value:"0", path:"" },
-        { name:"New Events", value:"0", path:"" },
-        { name:"Groups", value:"0", path:"" },
-    ]
-
     return (
         <Layout title={"Home"}>
-            <section className="grid gap-5 grid-cols-2 lg:grid-cols-4 py-5">
-                {list.map((item,i)=>(
-                    <Link href={""}>
-                        <div key={KEY+i} className="shadow px-5 py-4 bg rounded-md">
-                            <h4 className="text-2xl text-primary">{item.value}</h4>
-                            <p className="text-bold mt-2 text-sm">{item.name}</p>
-                        </div>
-                    </Link>
-                ))}
-            </section>
-
+            <Analytics/>
             <div className="mt-10">
                 <Table
                     header={["title","date","organiser","email","category","location","Action"]}
