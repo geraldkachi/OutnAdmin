@@ -1,8 +1,7 @@
 import React, {useState,useEffect} from 'react';
-import {Button, Formik, Input, Svg, useMutation, useQuery, Yup} from "@/components/rn-alpha";
+import {Button, Formik, Input, Preloader, Svg, useMutation, useQuery, Yup} from "@/components/rn-alpha";
 import PATHS from "@/paths";
 import {useApp} from "@/store/contexts/app-context";
-import Logo from "@/components/layouts/logo";
 import Textarea from "@/components/inputs/textarea";
 import CustomSelect from "@/components/inputs/custom-select";
 import {withAuth} from "@/hoc/with-auth";
@@ -13,17 +12,17 @@ type EventViewProps = {}
 
 const EventView: React.FC<EventViewProps> = (props) => {
 	const {} = props;
+	const router = useRouter();
 	const {mutate,loading} = useMutation(PATHS.createEvent)
 	const {loading:isLoading,error,data} = useQuery(PATHS.categories)
-	const [state,setState] = useState({email:"", organiser:""});
+	console.log(router.query.id);
+	const event = useQuery(PATHS.event,{variables:{id:router.query.id}, networkPolicy:"network-and-cache"})
 	const [key,setKey] = useState(0);
-	const router = useRouter();
 
 	const {Toast, showAlert} = useApp();
 
 	const formHandler=(values:any)=>{
 		const date = values.date.split("-");
-		setState(values)
 		mutate({
 			...values,
 			date: `${date[1]}-${date[2]}-${date[0]}`
@@ -58,6 +57,8 @@ const EventView: React.FC<EventViewProps> = (props) => {
 		ticketURL:Yup.string().required('TicketURL is required'),
 	});
 
+	console.log(event.data);
+
 	return (
 		<div key={key} className="fixed inset-0 overflow-y-auto py-10 px-2" style={{background:"linear-gradient(170.9deg, #5e4ff1 -16.98%, #4f9df1 128.65%)"}}>
 			<div className="container max-w-3xl py-5 px-5 lg:px-10 bg rounded">
@@ -74,19 +75,20 @@ const EventView: React.FC<EventViewProps> = (props) => {
 				<Formik
 					initialValues={{
 						title:"",
-						email:state.email,
+						email:"",
 						date:"",
 						startTime:"",
 						endTime:"",
 						description:"",
 						category:"",
 						location:"",
-						organiser:state.organiser,
+						organiser:"",
 						theme:"",
 						music:"",
 						dressCode:"",
 						ticketURL:"",
-						additionalInfo:""
+						additionalInfo:"",
+						...(event.data||{})
 					}}
 					onSubmit={(values => formHandler(values))}
 					validationSchema={Schema}
@@ -214,7 +216,7 @@ const EventView: React.FC<EventViewProps> = (props) => {
 							/>
 
 							<Button
-								title={"Submit"}
+								title={"Approve"}
 								className={"btn-primary mt-10"}
 								onClick={handleSubmit}
 								loading={loading}
@@ -223,6 +225,7 @@ const EventView: React.FC<EventViewProps> = (props) => {
 					)}
 				</Formik>
 			</div>
+			<Preloader loading={event.loading}/>
 		</div>
 	);
 };

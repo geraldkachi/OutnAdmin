@@ -43,6 +43,10 @@ const CustomSelect: React.FC<CustomSelectProps> = (props) => {
 	const [open,setOpen] = useState(false);
 	const [filter,setFilter] = useState("");
 
+	useEffect(()=>{
+		onSelect(value as string)
+	},[]);
+
 	const onSelect=(value:string)=>{
 		setSelected(value)
 		setValue(value)
