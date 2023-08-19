@@ -4,7 +4,7 @@ import separator from "../../utils/money";
 import {eye, eyeOff} from "@/svg/icons";
 
 interface Interface {
-    type?:'text'|'number'|'password'|'date'|'email'|'telephone'
+    type?:'text'|'number'|'password'|'date'|'email'|'telephone'|'time'
     name?:string
     setValue:(value:any)=>void
     value:any
@@ -47,7 +47,7 @@ const Input:React.FC<Interface>=({mt, onBlur,error,money,disabled,cs,max,autoCom
     return (
         <div style={{marginTop:mt}} className={cs}>
             {label&&(
-                <label htmlFor="" className="text-gray-800 text-sm">{label}</label>
+                <label htmlFor="" className="text-gray-800 text-sm">{label} {required&&(<span className="text-danger">*</span>)}</label>
             )}
             <div className="relative">
                 <div className={`bg border rounded-md overflow-hidden mt-1 ${error?"border-danger":""} ${className}`}>

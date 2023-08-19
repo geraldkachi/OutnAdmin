@@ -8,7 +8,7 @@ const Logo: React.FC<LogoProps> = (props) => {
     const {} = props;
     return (
         <Link href={"/"}>
-	        <Image src={"/images/logo.png"} alt={"logo"} width={60} height={60} priority/>
+	        <Image src={"/images/logo.png"} className="rounded-md" alt={"logo"} width={50} height={50} priority/>
         </Link>
     );
 };
