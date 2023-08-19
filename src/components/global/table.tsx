@@ -23,6 +23,7 @@ type TableProps = {
 		dataCount: number
 		limit: number
 		fetchMore:(variables?:any,concat?:'start'|'end'|'pagination', paginationKey?:string)=>Promise<any>
+		paginationKey?:string
 	}
 	btn?:{
 		text:string
@@ -57,15 +58,15 @@ const Table: React.FC<TableProps> = (props) => {
 	const endOffset = itemOffset + itemsPerPage;
 	const pageCount = Math.ceil(total / itemsPerPage);
 	const [filter,setFilter] = useState("");
-	const [page,setPage] = useState(0);
+	const [page,setPage] = useState(1);
 
 	const handlePageClick = (event:any) => {
 		const newOffset = (event.selected * itemsPerPage) % total;
-		setPage(event.selected)
+		setPage(event.selected+1)
 		setItemOffset(newOffset);
 
 		if (list?.slice(newOffset, newOffset + itemsPerPage).length < 1){
-			loadMore(event.selected)
+			loadMore(event.selected+1)
 		}
 	};
 
@@ -84,7 +85,8 @@ const Table: React.FC<TableProps> = (props) => {
 	const loadMore=(page:number)=>{
 		if (!load){
 			setLoad(true);
-			pagination?.fetchMore({ page }, "pagination").then((data) => {
+			pagination?.fetchMore({ page }, "pagination", "events").then((data) => {
+				console.log(data);
 				setLoad(false);
 			})
 		}

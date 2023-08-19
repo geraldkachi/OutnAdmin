@@ -18,10 +18,10 @@ const Home: React.FC<DashboardProps> = (props) => {
     const {loading,error,data, fetchMore} = useQuery(PATHS.events, {variables:{approved:false}, networkPolicy:"network-and-cache"})
 
     const list = [
-        { name:"Users", value:"23", path:"" },
-        { name:"Events", value:"23", path:"" },
-        { name:"New Events", value:"23", path:"" },
-        { name:"Groups", value:"23", path:"" },
+        { name:"Users", value:"0", path:"" },
+        { name:"Events", value:"0", path:"" },
+        { name:"New Events", value:"0", path:"" },
+        { name:"Groups", value:"0", path:"" },
     ]
 
     return (
@@ -61,9 +61,10 @@ const Home: React.FC<DashboardProps> = (props) => {
                     offsetType={"paginate"}
                     pagination={{
                         limit: data?.pagination.limit,
-                        total: data?.pagination.limit,
+                        total: data?.pagination.total,
                         dataCount: data?.pagination.dataCount,
-                        fetchMore
+                        fetchMore,
+                        paginationKey: "events"
                     }}
                 />
             </div>
