@@ -9,6 +9,7 @@ import {arrowBack} from "@/svg/icons";
 import {useRouter} from "next/router";
 import HtmlHead from "@/components/layouts/html-head";
 import sweetalert from "@/utils/sweetalert";
+import {KEY} from "@/config";
 
 type EventViewProps = {}
 
@@ -33,7 +34,6 @@ const EventView: React.FC<EventViewProps> = (props) => {
 				mutate({
 					...values,
 					date: `${date[1]}-${date[2]}-${date[0]}`,
-					approve:true
 				}).then(({data,status,error})=>{
 					if (status===200){
 						Toast("Approved successfully")
@@ -62,8 +62,10 @@ const EventView: React.FC<EventViewProps> = (props) => {
 		ticketURL:Yup.string().required('TicketURL is required'),
 	});
 
+
+
 	return (
-		<div key={loading?"dhshdd":"djsdskdnn"} className="fixed inset-0 overflow-y-auto py-10 px-2" style={{background:"linear-gradient(170.9deg, #5e4ff1 -16.98%, #4f9df1 128.65%)"}}>
+		<div key={loading?KEY:event.data?._id} className="fixed inset-0 overflow-y-auto py-10 px-2" style={{background:"linear-gradient(170.9deg, #5e4ff1 -16.98%, #4f9df1 128.65%)"}}>
 			<HtmlHead/>
 			<div className="container max-w-3xl py-5 px-5 lg:px-10 bg rounded">
 				<div className="relative flex-item gap-10">
@@ -92,7 +94,8 @@ const EventView: React.FC<EventViewProps> = (props) => {
 						additionalInfo:"",
 						paid:false,
 						...(event.data||{}),
-						date:event?.data?.dateTime.slice(0,10)||""
+						date:event?.data?.dateTime.slice(0,10)||"",
+						approved:true
 					}}
 					onSubmit={(values => formHandler(values))}
 					validationSchema={Schema}
