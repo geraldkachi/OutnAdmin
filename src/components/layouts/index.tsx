@@ -18,7 +18,7 @@ const Layout: React.FC<LayoutProps> = (props) => {
 
 	return (
 	    <div className={`w-full ${inter.className}`}>
-		    <HtmlHead title={`${title?title+' - ':""}Finceptive`}/>
+		    <HtmlHead title={`${title?title+' - ':""}Out N About`}/>
 		    <div className="flex relative w-full">
 			    <SideBar ref={ref} onToggle={onToggle}/>
 			    <div className="w-full bg-[#F1F7FE] min-h-screen">

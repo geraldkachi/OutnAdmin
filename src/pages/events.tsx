@@ -8,15 +8,12 @@ import Table from "@/components/global/table";
 type EventsProps = {}
 
 const Events: React.FC<EventsProps> = (props) => {
-    const {} = props;
 	const {loading,error,data, fetchMore} = useQuery(PATHS.events, {variables:{approved:true}, networkPolicy:"network-and-cache"})
-
-	console.log(data);
 	return (
         <Layout title={""}>
 	        <Table
 		        header={["title","date","organiser","email","category","location","Action"]}
-		        data={data?.events.map((item:any)=>(
+		        data={data?.data.map((item:any)=>(
 			        [
 				        item.title,
 				        item.date,
@@ -40,7 +37,6 @@ const Events: React.FC<EventsProps> = (props) => {
 			        total: data?.pagination.total,
 			        dataCount: data?.pagination.dataCount,
 			        fetchMore,
-			        paginationKey: "events"
 		        }}
 	        />
         </Layout>

@@ -9,6 +9,7 @@ const PATHS = {
 	resendEmail:"POST:/user/resend-email-token",
 	changePassword:"POST:/auth/change-password",
 	events:"POST:/admin/events",
+	users:"GET:/admin/users",
 	weekEvents:"GET:/events/week",
 	event:"GET:/event/:id",
 	favorites:"GET:/favorites",
