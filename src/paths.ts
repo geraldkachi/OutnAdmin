@@ -30,7 +30,8 @@ const PATHS = {
 	going:"POST:/group/event/going/:id",
 	notGoing:"POST:/group/event/not-going/:id",
 	createEvent:"POST:/event",
-	updateEvent:"PUT:/event/:id"
+	updateEvent:"PUT:/event/:id",
+	notification:"POST:/notification"
 }
 export default PATHS;
 
