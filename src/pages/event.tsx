@@ -3,18 +3,23 @@ import Logo from "@/components/layouts/logo";
 import {Button, Formik, Input, useMutation, Yup} from "@/components/rn-alpha";
 import PATHS from "@/paths";
 import {useApp} from "@/store/contexts/app-context";
+import sweetalert from "@/utils/sweetalert";
 
 type EventProps = {}
 
 const Event: React.FC<EventProps> = (props) => {
     const {} = props;
     const {mutate,loading,error,data} = useMutation(PATHS.createEvent)
-    const {Toast} = useApp();
+    const {Toast, showAlert} = useApp();
 
     const formHandler=(values:any)=>{
         mutate(values).then(({data,status,error})=>{
-            if (status===200){
-                Toast(data.message)
+            if (status===201){
+                showAlert({
+                    title:"Success",
+                    text:"Would you like to create another event?",
+                    btn:{text:"Yes, Create Another"}
+                })
             }else {
                 Toast(error||"")
             }
@@ -180,6 +185,7 @@ const Event: React.FC<EventProps> = (props) => {
                                 title={"Submit"}
                                 className={"btn-primary mt-10"}
                                 onClick={handleSubmit}
+                                loading={loading}
                             />
                         </div>
                     )}
