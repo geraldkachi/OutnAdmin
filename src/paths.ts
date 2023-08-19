@@ -28,7 +28,8 @@ const PATHS = {
 	removeEvent:"DELETE:/group/event/:id",
 	going:"POST:/group/event/going/:id",
 	notGoing:"POST:/group/event/not-going/:id",
-	createEvent:"POST:/event"
+	createEvent:"POST:/event",
+	updateEvent:"PUT:/event/:id"
 }
 export default PATHS;
 

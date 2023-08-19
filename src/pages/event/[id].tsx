@@ -15,7 +15,7 @@ type EventViewProps = {}
 const EventView: React.FC<EventViewProps> = (props) => {
 	const {} = props;
 	const router = useRouter();
-	const {mutate,loading} = useMutation(PATHS.createEvent)
+	const {mutate,loading} = useMutation(PATHS.updateEvent)
 	const {loading:isLoading,error,data} = useQuery(PATHS.categories)
 	const event = useQuery(PATHS.event,{variables:{id:router.query.id}, networkPolicy:"network-and-cache"})
 	const [key,setKey] = useState(0);
