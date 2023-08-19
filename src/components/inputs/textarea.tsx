@@ -7,6 +7,7 @@ export type TextareaProps = {
     cs?:string
     placeholder?:string
     label?:string
+    error?:any
     save?:boolean
     required?:boolean
     maxLength?:number
@@ -24,7 +25,8 @@ const Textarea: React.FC<TextareaProps> = (props) => {
         placeholder,
         maxLength,
         required,
-        save
+        save,
+        error
     } = props;
 
     useEffect(()=>{
@@ -44,7 +46,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     return (
         <div style={{marginTop:mt}} className={cs}>
             {label&&(
-                <label htmlFor="" className="text-gray-800 text-sm">{label}</label>
+                <label htmlFor="" className="text-gray-800 text-sm">{label} {required&&(<span className="text-danger">*</span>)}</label>
             )}
             <textarea
                 onChange={onChange}
@@ -54,6 +56,9 @@ const Textarea: React.FC<TextareaProps> = (props) => {
                 className={`${className} input border rounded-md h-20 text mt-1 resize-none`}
                 placeholder={placeholder}
             />
+            {error&&(
+                <p className="text-xs text-danger pl-2 pt-1">{error}</p>
+            )}
         </div>
     );
 };

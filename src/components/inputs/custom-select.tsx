@@ -19,6 +19,7 @@ type CustomSelectProps = {
 	disabled?:boolean
 	mt?:number,
 	loading?:boolean
+	required?:boolean
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (props) => {
@@ -31,9 +32,10 @@ const CustomSelect: React.FC<CustomSelectProps> = (props) => {
 		cs,
 		label,
 		setValue,
-		options,
+		options=[],
 		className,
-		loading
+		loading,
+		required
 	} = props;
 
 	const [selected,setSelected] = useState("");
@@ -53,12 +55,12 @@ const CustomSelect: React.FC<CustomSelectProps> = (props) => {
 		return placeholder
 	}
 
-	const list = options.filter((r)=>(r.label.toLowerCase().indexOf(filter.toLowerCase()) > -1));
+	const list = options?.filter((r)=>(r.label.toLowerCase().indexOf(filter.toLowerCase()) > -1))||[];
 
     return (
         <div style={{marginTop:mt}} className={cs}>
 	        {label&&(
-		        <label htmlFor="" className="label">{label}</label>
+		        <label htmlFor="" className="text-gray-800 text-sm">{label} {required&&(<span className="text-danger">*</span>)}</label>
 	        )}
 	        <div
 		        className={`${error?"border-danger":""} ${className} border rounded-md flex-item px-4 gap-5 mt-1 cursor-pointer bg h-14`}

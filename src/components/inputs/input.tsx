@@ -77,7 +77,9 @@ const Input:React.FC<Interface>=({mt, onBlur,error,money,disabled,cs,max,autoCom
                     </div>
                 )}
             </div>
-            <p className="text-xs text-danger pl-2 pt-1">{error}</p>
+            {error&&(
+                <p className="text-xs text-danger pl-2 pt-1">{error}</p>
+            )}
         </div>
 
     );

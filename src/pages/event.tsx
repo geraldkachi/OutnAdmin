@@ -1,27 +1,34 @@
 import React from 'react';
 import Logo from "@/components/layouts/logo";
-import {Button, Formik, Input, useMutation, Yup} from "@/components/rn-alpha";
+import {Button, Formik, Input, useMutation,useQuery, Yup} from "@/components/rn-alpha";
 import PATHS from "@/paths";
 import {useApp} from "@/store/contexts/app-context";
-import sweetalert from "@/utils/sweetalert";
+import CustomSelect from "@/components/inputs/custom-select";
+import Textarea from "@/components/inputs/textarea";
 
 type EventProps = {}
 
 const Event: React.FC<EventProps> = (props) => {
     const {} = props;
-    const {mutate,loading,error,data} = useMutation(PATHS.createEvent)
+    const {mutate,loading} = useMutation(PATHS.createEvent)
+    const {loading:isLoading,error,data} = useQuery(PATHS.categories)
+
     const {Toast, showAlert} = useApp();
 
     const formHandler=(values:any)=>{
-        mutate(values).then(({data,status,error})=>{
+        const date = values.date.split("-");
+        mutate({
+            ...values,
+            date: `${date[1]}-${date[2]}-${date[0]}`
+        }).then(({data,status,error})=>{
             if (status===201){
                 showAlert({
                     title:"Success",
                     text:"Would you like to create another event?",
-                    btn:{text:"Yes, Create Another"}
+                    btn:{text:"Add New Event"}
                 })
             }else {
-                Toast(error||"")
+                Toast(error||"", "red")
             }
         })
     }
@@ -58,6 +65,7 @@ const Event: React.FC<EventProps> = (props) => {
                         email:"",
                         date:"",
                         startTime:"",
+                        endTime:"",
                         description:"",
                         category:"",
                         location:"",
@@ -75,13 +83,6 @@ const Event: React.FC<EventProps> = (props) => {
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors,setFieldValue }) => (
                         <div className="py-10 flex flex-col gap-5">
-                            <Input
-                                setValue={(value)=>{setFieldValue("organiser",value)}}
-                                label={"Name of Organiser"}
-                                required
-                                value={values.organiser}
-                                error={errors.organiser}
-                            />
 
                             <Input
                                 setValue={(value)=>{setFieldValue("title",value)}}
@@ -89,6 +90,14 @@ const Event: React.FC<EventProps> = (props) => {
                                 required
                                 value={values.title}
                                 error={errors.title}
+                            />
+
+                            <Input
+                                setValue={(value)=>{setFieldValue("organiser",value)}}
+                                label={"Name of Organiser"}
+                                required
+                                value={values.organiser}
+                                error={errors.organiser}
                             />
 
                             <Input
@@ -100,7 +109,7 @@ const Event: React.FC<EventProps> = (props) => {
                                 error={errors.email}
                             />
 
-                            <Input
+                            <Textarea
                                 setValue={(value)=>{setFieldValue("description",value)}}
                                 label={"Write a short description about the event"}
                                 required
@@ -124,9 +133,12 @@ const Event: React.FC<EventProps> = (props) => {
                             </div>
 
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                                <Input
+                                <CustomSelect
+                                    options={data?.map((item:any)=>({label:item.name, value:item._id}))}
+                                    loading={isLoading}
                                     setValue={(value)=>{setFieldValue("category",value)}}
                                     label={"Event Type"}
+                                    placeholder={"Select Event Type"}
                                     required
                                     value={values.category}
                                     error={errors.category}
@@ -139,7 +151,7 @@ const Event: React.FC<EventProps> = (props) => {
                                 />
                             </div>
 
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
                                 <Input
                                     setValue={(value)=>{setFieldValue("date",value)}}
                                     label={"Date"}
@@ -147,14 +159,22 @@ const Event: React.FC<EventProps> = (props) => {
                                     type={"date"}
                                     value={values.date}
                                     error={errors.date}
+                                    min={new Date().toISOString().slice(0,10)}
                                 />
                                 <Input
                                     setValue={(value)=>{setFieldValue("startTime",value)}}
-                                    label={"Time"}
+                                    label={"From"}
                                     required
                                     type={"time"}
                                     value={values.startTime}
                                     error={errors.startTime}
+                                />
+                                <Input
+                                    setValue={(value)=>{setFieldValue("endTime",value)}}
+                                    label={"To"}
+                                    type={"time"}
+                                    value={values.endTime}
+                                    error={errors.endTime}
                                 />
                             </div>
 
