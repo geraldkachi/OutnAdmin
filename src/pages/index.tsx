@@ -49,7 +49,7 @@ const Home: React.FC<DashboardProps> = (props) => {
                             <div style={{background:item.category.color}} className="text-white py-1 px-3 rounded-full text-center">{item.category.name}</div>,
                             item.location,
                             <div>
-                                <Link href={""}>
+                                <Link href={`/event/${item._id}`}>
                                     <span className="text-primary">View</span>
                                 </Link>
                             </div>,

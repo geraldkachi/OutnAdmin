@@ -1,10 +1,13 @@
 import React, {useState,useEffect} from 'react';
-import {Button, Formik, Input, useMutation, useQuery, Yup} from "@/components/rn-alpha";
+import {Button, Formik, Input, Svg, useMutation, useQuery, Yup} from "@/components/rn-alpha";
 import PATHS from "@/paths";
 import {useApp} from "@/store/contexts/app-context";
 import Logo from "@/components/layouts/logo";
 import Textarea from "@/components/inputs/textarea";
 import CustomSelect from "@/components/inputs/custom-select";
+import {withAuth} from "@/hoc/with-auth";
+import {arrowBack} from "@/svg/icons";
+import {useRouter} from "next/router";
 
 type EventViewProps = {}
 
@@ -14,6 +17,7 @@ const EventView: React.FC<EventViewProps> = (props) => {
 	const {loading:isLoading,error,data} = useQuery(PATHS.categories)
 	const [state,setState] = useState({email:"", organiser:""});
 	const [key,setKey] = useState(0);
+	const router = useRouter();
 
 	const {Toast, showAlert} = useApp();
 
@@ -57,10 +61,13 @@ const EventView: React.FC<EventViewProps> = (props) => {
 	return (
 		<div key={key} className="fixed inset-0 overflow-y-auto py-10 px-2" style={{background:"linear-gradient(170.9deg, #5e4ff1 -16.98%, #4f9df1 128.65%)"}}>
 			<div className="container max-w-3xl py-5 px-5 lg:px-10 bg rounded">
-				<div className="relative">
-					<Logo/>
+				<div className="relative flex-item gap-10">
+					<div onClick={()=>{router.back()}} className="z-10 w-10 h-10 flex-center cursor-pointer">
+						<Svg icon={arrowBack} className="w-8"/>
+					</div>
+					{/*<Logo/>*/}
 					<div className="absolute inset-0 py-2">
-						<h1 className="text-xl text-center uppercase">Create an Event</h1>
+						<h1 className="text-xl text-center uppercase">EVENT</h1>
 					</div>
 				</div>
 
@@ -220,4 +227,4 @@ const EventView: React.FC<EventViewProps> = (props) => {
 	);
 };
 
-export default EventView;
+export default withAuth(EventView);
