@@ -77,7 +77,7 @@ const Event: React.FC<EventProps> = (props) => {
                         <div className="py-10 flex flex-col gap-5">
                             <Input
                                 setValue={(value)=>{setFieldValue("organiser",value)}}
-                                label={"Name of organiser"}
+                                label={"Name of Organiser"}
                                 required
                                 value={values.organiser}
                                 error={errors.organiser}
