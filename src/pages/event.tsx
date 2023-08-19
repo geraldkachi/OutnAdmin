@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Logo from "@/components/layouts/logo";
 import {Button, Formik, Input, useMutation,useQuery, Yup} from "@/components/rn-alpha";
 import PATHS from "@/paths";
@@ -12,16 +12,20 @@ const Event: React.FC<EventProps> = (props) => {
     const {} = props;
     const {mutate,loading} = useMutation(PATHS.createEvent)
     const {loading:isLoading,error,data} = useQuery(PATHS.categories)
+    const [state,setState] = useState({email:"", organiser:""});
+    const [key,setKey] = useState(0);
 
     const {Toast, showAlert} = useApp();
 
     const formHandler=(values:any)=>{
         const date = values.date.split("-");
+        setState(values)
         mutate({
             ...values,
             date: `${date[1]}-${date[2]}-${date[0]}`
         }).then(({data,status,error})=>{
             if (status===201){
+                setKey(prevState => prevState+1)
                 showAlert({
                     title:"Success",
                     text:"Would you like to create another event?",
@@ -50,7 +54,7 @@ const Event: React.FC<EventProps> = (props) => {
     });
 
     return (
-        <div className="fixed inset-0 overflow-y-auto py-10 px-2" style={{background:"linear-gradient(170.9deg, #5e4ff1 -16.98%, #4f9df1 128.65%)"}}>
+        <div key={key} className="fixed inset-0 overflow-y-auto py-10 px-2" style={{background:"linear-gradient(170.9deg, #5e4ff1 -16.98%, #4f9df1 128.65%)"}}>
             <div className="container max-w-3xl py-5 px-5 lg:px-10 bg rounded">
                 <div className="relative">
                     <Logo/>
@@ -62,14 +66,14 @@ const Event: React.FC<EventProps> = (props) => {
                 <Formik
                     initialValues={{
                         title:"",
-                        email:"",
+                        email:state.email,
                         date:"",
                         startTime:"",
                         endTime:"",
                         description:"",
                         category:"",
                         location:"",
-                        organiser:"",
+                        organiser:state.organiser,
                         theme:"",
                         music:"",
                         dressCode:"",
