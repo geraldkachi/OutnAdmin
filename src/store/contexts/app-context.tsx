@@ -97,6 +97,7 @@ const AppProvider: React.FC<any> = ({children}) => {
             <SuccessModal
                 title={alert.title}
                 text={alert.text}
+                color={alert.color}
                 btn={{
                     text:alert.btn.text,
                     href:alert.btn.href,

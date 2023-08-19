@@ -71,6 +71,7 @@ export type AlertProps = {
 		onClick?:()=>void
 		closeOnClick?:boolean
 	}
+	color?:string
 }
 
 export type RequestVariables = {

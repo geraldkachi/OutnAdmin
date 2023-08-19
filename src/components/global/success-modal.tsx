@@ -12,16 +12,17 @@ type SignUpSuccessProps = {
         href?:string,
         onClick?:()=>void
     }
+    color?:string
 }
 
 const SuccessModal: React.FC<SignUpSuccessProps&ModalProps> = (props) => {
-    const {modal, title, text, btn} = props;
+    const {modal, title, text, btn, color} = props;
     const router = useRouter();
 
     return (
         <>
             {modal&&(
-                <div className="fixed inset-0 z-1000 flex-center px-2 bg-modal">
+                <div className={`fixed inset-0 z-1000 flex-center px-2 ${color||'bg-modal'}`}>
                     <div className="container bg rounded-lg px-5 lg:px-10 py-10 max-w-md flex-center flex-col">
                         <div className="w-20 h-20 bg-success rounded-full flex-center">
                             <Svg icon={check} className="w-10 text-white"/>

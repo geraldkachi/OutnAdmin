@@ -27,9 +27,10 @@ const Event: React.FC<EventProps> = (props) => {
             if (status===201){
                 setKey(prevState => prevState+1)
                 showAlert({
-                    title:"Success",
-                    text:"Would you like to create another event?",
-                    btn:{text:"Add New Event"}
+                    title:"Submitted Successfully",
+                    text:"We have received your request, we will get back to you as soon as possible",
+                    btn:{text:"Add New Event"},
+                    color:"bg-primary"
                 })
             }else {
                 Toast(error||"", "red")
