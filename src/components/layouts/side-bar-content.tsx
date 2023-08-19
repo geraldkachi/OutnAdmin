@@ -12,6 +12,7 @@ import {
 import {logout} from "@/svg/icons";
 import {useApp} from "@/store/contexts/app-context";
 import {quick2} from "@/svg/quick";
+import {calendar, category, users} from "@/utils/icons/icons";
 
 type SideBarContentProps = {}
 
@@ -29,27 +30,27 @@ const SideBarContent: React.FC<SideBarContentProps> = (props) => {
 		},
 		{
 			name:"Events",
-			icon:vendors,
-			path:"/users",
+			icon:calendar,
+			path:"/events",
 			width:"w-5",
 		},
 		{
 			name:"Users",
-			icon:vendors,
+			icon:users,
 			path:"/users",
-			width:"w-5",
+			width:"w-6",
 		},
 		{
 			name:"Categories",
-			icon:vendors,
-			path:"/users",
-			width:"w-5",
+			icon:category,
+			path:"/categories",
+			width:"w-6",
 		},
 		{
 			name:"Groups",
 			icon:vendors,
-			path:"/users",
-			width:"w-5",
+			path:"/groups",
+			width:"w-6",
 		},
 	]
 

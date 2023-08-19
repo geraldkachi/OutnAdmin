@@ -6,6 +6,8 @@ import {useApp} from "@/store/contexts/app-context";
 import {KEY} from "@/config";
 import Link from "next/link";
 import Table from "@/components/global/table";
+import {Button, useQuery} from "@/components/rn-alpha";
+import PATHS from "@/paths";
 
 type DashboardProps = {}
 
@@ -13,6 +15,7 @@ const Home: React.FC<DashboardProps> = (props) => {
     const {} = props;
     const router = useRouter();
     const {user} = useApp();
+    const {loading,error,data, fetchMore} = useQuery(PATHS.events, {variables:{approved:false}, networkPolicy:"network-and-cache"})
 
     const list = [
         { name:"Users", value:"23", path:"" },
@@ -36,11 +39,32 @@ const Home: React.FC<DashboardProps> = (props) => {
 
             <div className="mt-10">
                 <Table
-                    header={[""]}
-                    data={[]}
-                    statusIndex={2}
-                    title={"New Events"}
+                    header={["title","date","organiser","email","category","location","Action"]}
+                    data={data?.events.map((item:any)=>(
+                        [
+                            item.title,
+                            item.date,
+                            item.organiser,
+                            item.email,
+                            <div style={{background:item.category.color}} className="text-white py-1 px-3 rounded-full text-center">{item.category.name}</div>,
+                            item.location,
+                            <div>
+                                <Link href={""}>
+                                    <span className="text-primary">View</span>
+                                </Link>
+                            </div>,
+                        ]
+                    ))}
+                    title={"Pending Events"}
                     emptyText={"No new events"}
+                    loading={(loading && (!data || data?.pagination.dataCount < 1))}
+                    offsetType={"paginate"}
+                    pagination={{
+                        limit: data?.pagination.limit,
+                        total: data?.pagination.limit,
+                        dataCount: data?.pagination.dataCount,
+                        fetchMore
+                    }}
                 />
             </div>
         </Layout>

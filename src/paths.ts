@@ -8,7 +8,7 @@ const PATHS = {
 	verifyEmail:"POST:/user/email-verify",
 	resendEmail:"POST:/user/resend-email-token",
 	changePassword:"POST:/auth/change-password",
-	events:"POST:/events",
+	events:"POST:/admin/events",
 	weekEvents:"GET:/events/week",
 	event:"GET:/event/:id",
 	favorites:"GET:/favorites",

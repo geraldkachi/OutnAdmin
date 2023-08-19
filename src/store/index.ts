@@ -15,7 +15,6 @@ const saveToLocalStorage = (state:any) => {
 const loadFromLocalStorage = () => {
 	try {
 		const serializedState = AlphaStorage.getItem('_state');
-		console.log({serializedState});
 		if (serializedState === null) return undefined;
 		return serializedState;
 	} catch (e) {
@@ -39,7 +38,6 @@ export const store = configureStore({
 })
 
 store.subscribe(() => {
-	console.log("store",store.getState());
 	saveToLocalStorage(store.getState());
 	// console.log("update", store.getState());
 });

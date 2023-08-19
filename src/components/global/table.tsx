@@ -9,7 +9,7 @@ import {useRouter} from "next/router";
 type TableProps = {
 	header: string[]
 	data: any[][]
-	statusIndex: number
+	statusIndex?: number
 	title:string
 	headerRight?:React.ReactNode
 	headerLeft?:React.ReactNode
@@ -82,11 +82,9 @@ const Table: React.FC<TableProps> = (props) => {
 	const [load, setLoad] = useState(false);
 
 	const loadMore=(page:number)=>{
-		console.log({page});
 		if (!load){
 			setLoad(true);
-			pagination?.fetchMore({ offset: page }, "pagination").then((data) => {
-				console.log({data});
+			pagination?.fetchMore({ page }, "pagination").then((data) => {
 				setLoad(false);
 			})
 		}
@@ -97,7 +95,7 @@ const Table: React.FC<TableProps> = (props) => {
 		    <div className="flex-between flex-wrap py-4 px-5">
 			    <div className="flex-item gap-2">
 				    {title&&(
-					    <h3 className="text-xl font-semibold">{title}</h3>
+					    <h3 className="text-lg font-semibold">{title}</h3>
 				    )}
 				    {headerLeft}
 			    </div>
@@ -128,7 +126,7 @@ const Table: React.FC<TableProps> = (props) => {
 						    <thead>
 						    <tr className="border-b font-semibold text">
 							    {header.map((item,i)=>(
-								    <td key={KEY+i}>{item}</td>
+								    <td key={KEY+i} className="capitalize">{item}</td>
 							    ))}
 						    </tr>
 						    </thead>
