@@ -17,11 +17,13 @@ const Users: React.FC<UsersProps> = (props) => {
     const {Toast} = useApp();
 
     const formHandler=(values:any)=>{
+        console.log(values);
         mutate(values).then(({data,status,error})=>{
             if (status===200){
+                setId("")
                 Toast("Notification Sent")
             }else {
-                Toast(error||"")
+                Toast(error||"","red")
             }
         })
     }
@@ -63,9 +65,10 @@ const Users: React.FC<UsersProps> = (props) => {
                 }}
             />
 
-            <Modal modal={!!id} setModal={()=>setId("")} className="max-w-md">
+            <Modal modal={!!id} setModal={()=>setId("")} className="max-w-xl" close>
                 <Formik
                     initialValues={{
+                        userId:id,
                         title:"",
                         message:"",
                     }}
@@ -76,6 +79,7 @@ const Users: React.FC<UsersProps> = (props) => {
                 >
                     {({ handleChange, handleBlur, handleSubmit, values, errors,setFieldValue }) => (
                        <div className="flex flex-col gap-5 p-10">
+                           <h1 className="">Send Push Notification</h1>
                            <Input
                                setValue={(value)=>{setFieldValue("title",value)}}
                                value={values.title}
@@ -83,12 +87,17 @@ const Users: React.FC<UsersProps> = (props) => {
                                label={"Title"}
                            />
                            <Textarea
-                               setValue={(value)=>{setFieldValue("value",value)}}
+                               setValue={(value)=>{setFieldValue("message",value)}}
                                value={values.message}
                                error={errors.message}
                                label={"Message"}
                            />
-                           <Button title={"Send"} className={"btn-primary"}/>
+                           <Button
+                               title={"Send"}
+                               className={"btn-primary"}
+                               onClick={handleSubmit}
+                               loading={isLoading}
+                           />
                        </div>
                     )}
                 </Formik>
