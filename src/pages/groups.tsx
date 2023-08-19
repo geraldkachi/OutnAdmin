@@ -15,8 +15,8 @@ const Groups: React.FC<GroupsProps> = (props) => {
                 data={data?.data?.map((item:any)=>(
                     [
                         item.name,
-                        item.members,
-                        item.events,
+                        item.members||0,
+                        item.events||0,
                     ]
                 ))}
                 title={"Groups"}
