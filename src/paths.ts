@@ -12,7 +12,7 @@ const PATHS = {
 	groups:"GET:/admin/groups",
 	users:"GET:/admin/users",
 	weekEvents:"GET:/events/week",
-	event:"GET:/event/:id",
+	event:"GET:/admin/event/:id",
 	favorites:"GET:/favorites",
 	saveFavorite:"POST:/favorite/:id",
 	removeFavorite:"DELETE:/favorite/:id",
