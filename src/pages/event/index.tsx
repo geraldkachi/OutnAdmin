@@ -44,7 +44,7 @@ const Event: React.FC<EventProps> = (props) => {
 		email:Yup.string().required('Email is required'),
 		date:Yup.string().required('Date is required'),
 		startTime:Yup.string().required('Time is required'),
-		description:Yup.string().required('Description is required'),
+		description:Yup.string().optional(),
 		category:Yup.string().required('Event type is required'),
 		location:Yup.string().required('Location is required'),
 		organiser:Yup.string().required('Organiser is required'),
