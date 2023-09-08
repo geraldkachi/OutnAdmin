@@ -13,7 +13,6 @@ export {default as Loader} from "./global/loader";
 export {default as Preloader} from "./global/preloader";
 export {default as useDispatch} from "../hooks/use-dispatch";
 export {default as useSelector} from "../hooks/use-selector";
-// export {useApp} from "../store/contexts/app-context";
 
 import dayjs from "dayjs";
 const relativeTime = require('dayjs/plugin/relativeTime')

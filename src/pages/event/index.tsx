@@ -1,11 +1,12 @@
 import React, {useState,useEffect} from 'react';
-import {Button, Formik, Input, useMutation, useQuery, Yup} from "@/components/rn-alpha";
+import {Button, dayjs, Formik, Input, Select, useMutation, useQuery, Yup} from "@/components/rn-alpha";
 import PATHS from "@/paths";
 import {useApp} from "@/store/contexts/app-context";
 import Logo from "@/components/layouts/logo";
 import Textarea from "@/components/inputs/textarea";
 import CustomSelect from "@/components/inputs/custom-select";
 import HtmlHead from "@/components/layouts/html-head";
+import timezones from "@/utils/timezones";
 
 type EventProps = {}
 
@@ -53,6 +54,7 @@ const Event: React.FC<EventProps> = (props) => {
 		dressCode:Yup.string().optional(),
 		additionalInfo:Yup.string().optional(),
 		ticketURL:Yup.string().required('TicketURL is required'),
+		timezone:Yup.string().required('Timezone is required'),
 	});
 
 	return (
@@ -81,7 +83,9 @@ const Event: React.FC<EventProps> = (props) => {
 						music:"",
 						dressCode:"",
 						ticketURL:"",
-						additionalInfo:""
+						additionalInfo:"",
+						// @ts-ignore
+						timezone:dayjs.tz.guess()
 					}}
 					onSubmit={(values => formHandler(values))}
 					validationSchema={Schema}
@@ -158,16 +162,17 @@ const Event: React.FC<EventProps> = (props) => {
 								/>
 							</div>
 
+							<Input
+								setValue={(value)=>{setFieldValue("date",value)}}
+								label={"Date"}
+								required
+								type={"date"}
+								value={values.date}
+								error={errors.date}
+								min={new Date().toISOString().slice(0,10)}
+							/>
+
 							<div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-								<Input
-									setValue={(value)=>{setFieldValue("date",value)}}
-									label={"Date"}
-									required
-									type={"date"}
-									value={values.date}
-									error={errors.date}
-									min={new Date().toISOString().slice(0,10)}
-								/>
 								<Input
 									setValue={(value)=>{setFieldValue("startTime",value)}}
 									label={"From"}
@@ -182,6 +187,13 @@ const Event: React.FC<EventProps> = (props) => {
 									type={"time"}
 									value={values.endTime}
 									error={errors.endTime}
+								/>
+								<Select
+									setValue={(value)=>{setFieldValue("endTime",value)}}
+									label={"Timezone"}
+									options={timezones.map((item)=>({label:item, value:item}))}
+									value={values.timezone}
+									error={errors.timezone}
 								/>
 							</div>
 

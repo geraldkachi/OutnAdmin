@@ -1,5 +1,16 @@
-import React, {useState,useEffect} from 'react';
-import {Button, Checkbox, Formik, Input, Preloader, Svg, useMutation, useQuery, Yup} from "@/components/rn-alpha";
+import React, {useState} from 'react';
+import {
+	Button,
+	Checkbox, dayjs,
+	Formik,
+	Input,
+	Preloader,
+	Select,
+	Svg,
+	useMutation,
+	useQuery,
+	Yup
+} from "@/components/rn-alpha";
 import PATHS from "@/paths";
 import {useApp} from "@/store/contexts/app-context";
 import Textarea from "@/components/inputs/textarea";
@@ -10,6 +21,7 @@ import {useRouter} from "next/router";
 import HtmlHead from "@/components/layouts/html-head";
 import sweetalert from "@/utils/sweetalert";
 import {KEY} from "@/config";
+import timezones from "@/utils/timezones";
 
 type EventViewProps = {}
 
@@ -62,8 +74,6 @@ const EventView: React.FC<EventViewProps> = (props) => {
 		ticketURL:Yup.string().required('TicketURL is required'),
 	});
 
-
-
 	return (
 		<div key={loading?KEY:event.data?._id} className="fixed inset-0 overflow-y-auto py-10 px-2" style={{background:"linear-gradient(170.9deg, #5e4ff1 -16.98%, #4f9df1 128.65%)"}}>
 			<HtmlHead/>
@@ -95,7 +105,9 @@ const EventView: React.FC<EventViewProps> = (props) => {
 						paid:false,
 						...(event.data||{}),
 						date:event?.data?.dateTime.slice(0,10)||"",
-						approved:true
+						approved:true,
+						// @ts-ignore
+						timezone:event?.data?.timezone||dayjs.tz.guess()
 					}}
 					onSubmit={(values => formHandler(values))}
 					validationSchema={Schema}
@@ -172,16 +184,17 @@ const EventView: React.FC<EventViewProps> = (props) => {
 								/>
 							</div>
 
+							<Input
+								setValue={(value)=>{setFieldValue("date",value)}}
+								label={"Date"}
+								required
+								type={"date"}
+								value={values.date}
+								error={errors.date}
+								min={new Date().toISOString().slice(0,10)}
+							/>
+
 							<div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-								<Input
-									setValue={(value)=>{setFieldValue("date",value)}}
-									label={"Date"}
-									required
-									type={"date"}
-									value={values.date}
-									error={errors.date}
-									min={new Date().toISOString().slice(0,10)}
-								/>
 								<Input
 									setValue={(value)=>{setFieldValue("startTime",value)}}
 									label={"From"}
@@ -196,6 +209,13 @@ const EventView: React.FC<EventViewProps> = (props) => {
 									type={"time"}
 									value={values.endTime}
 									error={errors.endTime}
+								/>
+								<Select
+									setValue={(value)=>{setFieldValue("endTime",value)}}
+									label={"Timezone"}
+									options={timezones.map((item)=>({label:item, value:item}))}
+									value={values.timezone}
+									error={errors.timezone}
 								/>
 							</div>
 
