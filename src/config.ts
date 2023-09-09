@@ -1,6 +1,6 @@
 const config = {
-    // baseUrl:"https://app.getoutnabout.co.uk",
-    baseUrl:process.env.NEXT_PUBLIC_BASE_URL,
+    baseUrl:"https://app.getoutnabout.co.uk",
+    // baseUrl:process.env.NEXT_PUBLIC_BASE_URL,
 };
 // const config = env.dev;
 export const KEY=Math.random().toString(36).substring(2,20)
