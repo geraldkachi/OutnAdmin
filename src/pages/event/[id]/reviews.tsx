@@ -25,6 +25,7 @@ const Reviews: React.FC<ReviewsProps> = (props) => {
 						        <Svg icon={star} className="w-5 text-primary"/>
 						        <p>{item.rate}</p>
 					        </div>
+					        <p className="font-bold text-base mt-2">Attended: {item.attended?"Yes":"No"}</p>
 				        </div>
 				        <p className="text-base text mt-2">{item.comment}</p>
 			        </div>
