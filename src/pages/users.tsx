@@ -40,7 +40,7 @@ const Users: React.FC<UsersProps> = (props) => {
                     total: data?.pagination.total,
                     dataCount: data?.pagination.dataCount,
                     fetchMore,
-                    paginationKey: "events"
+                    paginationKey: "data"
                 }}
             />
             <SendNotificationModal modal={modal} setModal={setModal}/>

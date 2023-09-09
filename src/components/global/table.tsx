@@ -85,8 +85,7 @@ const Table: React.FC<TableProps> = (props) => {
 	const loadMore=(page:number)=>{
 		if (!load){
 			setLoad(true);
-			pagination?.fetchMore({ page }, "pagination", "events").then((data) => {
-				console.log(data);
+			pagination?.fetchMore({ page }, "pagination", pagination.paginationKey||"data").then((data) => {
 				setLoad(false);
 			})
 		}
