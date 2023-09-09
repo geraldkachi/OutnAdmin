@@ -12,7 +12,7 @@ export const withAuth = (Page:any) => {
             (async () => {
                 if (!auth?.accessToken) {
                     await setLogout()
-                    setRedirectTo(router.pathname)
+                    setRedirectTo(window.location.pathname)
                     await router.push("/login")
                 }
             })()
