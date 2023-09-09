@@ -28,6 +28,8 @@ const SendNotificationModal: React.FC<SendNotificationModalProps&ModalProps> = (
 	const Schema = Yup.object().shape({
 		title:Yup.string().required('Title is required'),
 		message:Yup.string().required('Message is required'),
+		url:Yup.string().required('URL is required'),
+		category:Yup.string().required('Category is required'),
 	});
 
     return (
