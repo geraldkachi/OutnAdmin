@@ -48,6 +48,7 @@ const EventView: React.FC<EventViewProps> = (props) => {
 					date: `${date[1]}-${date[2]}-${date[0]}`,
 				}).then(({data,status,error})=>{
 					if (status===200){
+						event.refetch()
 						Toast("Approved successfully")
 						router.back()
 					}else {

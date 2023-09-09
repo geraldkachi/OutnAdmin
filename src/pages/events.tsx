@@ -24,11 +24,14 @@ const Events: React.FC<EventsProps> = (props) => {
 				        item.clicks,
 				        item.shares,
 				        item.location,
-				        <div>
+				        <div className="flex-item gap-5">
 					        <Link href={`/event/${item._id}`}>
 						        <span className="text-primary">View</span>
 					        </Link>
-				        </div>,
+					        <Link href={`/event/${item._id}/reviews`}>
+						        <span className="text-primary">Reviews</span>
+					        </Link>
+				        </div>
 			        ]
 		        ))}
 		        title={"Events"}
