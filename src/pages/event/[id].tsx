@@ -211,7 +211,7 @@ const EventView: React.FC<EventViewProps> = (props) => {
 									error={errors.endTime}
 								/>
 								<Select
-									setValue={(value)=>{setFieldValue("endTime",value)}}
+									setValue={(value)=>{setFieldValue("timezone",value)}}
 									label={"Timezone"}
 									options={timezones.map((item)=>({label:item, value:item}))}
 									value={values.timezone}
