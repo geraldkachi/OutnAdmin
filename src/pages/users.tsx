@@ -17,18 +17,17 @@ const Users: React.FC<UsersProps> = (props) => {
                 headerRight={
                     <Button
                         title={"Send Notification"}
-                        className={"btn-primary"}
-                        onClick={()=>{}}
+                        className={"btn-primary w-auto"}
+                        onClick={()=>{setModal(true)}}
                     />
                 }
-                header={["Name","Email","Verified","Preference", "Action"]}
+                header={["Name","Email","Verified","Preference"]}
                 data={data?.data?.map((item:any)=>(
                     [
                         item.name,
                         item.email,
                         item.verified?"Yes":"No",
                         item.preference.length,
-                        <div></div>
                     ]
                 ))}
                 title={"Users"}

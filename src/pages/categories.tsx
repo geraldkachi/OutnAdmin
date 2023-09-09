@@ -20,7 +20,7 @@ const Categories: React.FC<CategoriesProps> = (props) => {
                 ))}
                 title={"Categories"}
                 emptyText={"No records found"}
-                loading={(loading && (!data || data?.pagination?.dataCount < 1))}
+                loading={(loading && !data)}
             />
         </Layout>
     );
