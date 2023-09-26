@@ -17,7 +17,7 @@ const SendNotificationModal: React.FC<SendNotificationModalProps&ModalProps> = (
 
 	const formHandler=(values:any)=>{
 		mutate({...values, category:values.category||undefined}).then(({data,status,error})=>{
-			if (status===200){
+			if (status===200||status===201){
 				Toast("Notification Sent")
 			}else {
 				Toast(error||"","red")
